@@ -1,3 +1,31 @@
+# ASOCIO – Asignación Óptima de Espacios de Trabajo
+
+**Satisfacción del colaborador vs. reglas organizacionales**  
+Proyecto de optimización – Departamento de Ingeniería Industrial, Universidad de Antioquia (2025).
+
+📄 **Informe de entrega:** [ASOCIO_OPTIMIZACION_2025.pdf](./ASOCIO_OPTIMIZACION_2025.pdf)
+
+## Resumen
+
+Sistema en Python (Pyomo + solver CBC) que asigna escritorios, días y zonas a los colaboradores de la universidad equilibrando dos objetivos en conflicto mediante una **optimización en dos etapas**:
+
+1. **Modelo F2 – Colaboradores:** maximiza la satisfacción según las preferencias de cada colaborador, respetando asistencia mínima, un colaborador por escritorio y la programación de reuniones grupales.
+2. **Modelo F1 – Universidad:** minimiza la dispersión de los grupos entre zonas y las penalizaciones por baja presencialidad (P1) y por colaboradores aislados en una zona sin su grupo (P2).
+3. **Restricción épsilon:** F1 se resuelve exigiendo un nivel mínimo de satisfacción (ε) definido por el usuario a partir del máximo obtenido en F2.
+
+### Resultados (10 instancias)
+
+| Modelo | Satisfacción | Penalizaciones |
+|---|---|---|
+| F2 (colaboradores) | 83 % – 91 % | Altas (hasta 201) |
+| F1 (universidad) | 34 % – 56 % | Bajas |
+| **Épsilon (combinado)** | **66 % – 77 %** | **Muy bajas** |
+
+El modelo épsilon logra el mejor equilibrio: por ejemplo, en la instancia 9 alcanza 68.54 % de satisfacción (vs. 50.49 % en F1) y reduce las penalizaciones en un 88 % frente a F2. El detalle completo, el análisis y la formulación matemática están en el [informe](./ASOCIO_OPTIMIZACION_2025.pdf).
+
+### Uso
+
+El usuario final solo necesita ejecutar `Script_ejecucion_usuario.py`, que guía la carga de la instancia (`.json`), la ejecución y la exportación de resultados (visualizaciones y Excel en `Salidas_usuario`). Se recomiendan ~1 h de resolución para las instancias 1–6 y ~1.5 h para las 7–10.
 
 ## Autores
 
@@ -44,4 +72,4 @@ Despliegue del modelo F1 crudo (solo intereses de la universidad), todos los res
 
 ## Despliegue_epsilon.py, Model_outputs_epsilon y Model_outputs_F2
 
-Despliegue del modelo F2 crudo (solo intereses de la universidad) y el modelo epsilon. Los resultados de ambos modelos se exportan hacia las carpetas Model_outputs_F2 y Model_outputs_epsilon respectivamente
+Despliegue del modelo F2 crudo (solo intereses de los colaboradores) y el modelo epsilon. Los resultados de ambos modelos se exportan hacia las carpetas Model_outputs_F2 y Model_outputs_epsilon respectivamente
